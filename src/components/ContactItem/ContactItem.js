@@ -12,7 +12,7 @@ export default function ContactItem({ contact }) {
   return (
     <li className={css.contact}>
       <h5 className={css.text}>{contact.name}:</h5>
-      <p className={css.text}>{contact.number}</p>
+      <p className={css.text}>{contact.phone}</p>
       <button
         type="button"
         className={css.button}

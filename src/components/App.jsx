@@ -3,10 +3,12 @@ import ContactForm from './ContactForm/ContactForm';
 import Filter from './Filter/Filter';
 
 export function App() {
+  
   return (
     <div>
       <div
         style={{
+          height: 4000,
           margin: 15,
           padding: '12px 16px',
           borderRadius: 4,
