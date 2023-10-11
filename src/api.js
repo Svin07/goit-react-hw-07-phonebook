@@ -10,6 +10,25 @@ export const getAllContacts =  async () => {
     return data
 };
 
+export const deleteContact =  async (id) => {
+    const data = await axios.get(`"/Contacts/${id}"`, {
+  method: 'DELETE',
+  headers: {'content-type':'application/json'},
+});
+    return data
+};
 
+
+export const addContact =  async (newContact) => {
+    const data = await axios.get("/Contacts", {
+  method: 'POST',
+  headers: {'content-type':'application/json'},
+  
+  body: JSON.stringify(newContact)
+});
+    return data
+};
+
+ 
 
 
