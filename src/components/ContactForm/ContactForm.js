@@ -1,8 +1,8 @@
 import css from './ContactForm.module.css';
 import { useState } from 'react';
-import { addContact } from 'redux/contactsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { getContacts } from 'redux/selectors';
+import { addNewContact } from 'redux/sliceContacts';
 
 export default function ContactForm() {
   const [name, setName] = useState('');
@@ -29,7 +29,7 @@ export default function ContactForm() {
       alert(`${name} is already in contacts.`);
       return;
     } else {
-      dispatch(addContact({ name, number }));
+      dispatch(addNewContact({ name, number }));
     }
 
     setName(defaultValue);
