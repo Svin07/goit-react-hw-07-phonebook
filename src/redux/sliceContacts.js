@@ -10,15 +10,36 @@ const initialState = {
 
 
 
-export const getContactsFromBack = createAsyncThunk('contacts/getContactsFromBack', async () => { return await getAllContacts() })
+export const getContactsFromBack = createAsyncThunk('contacts/getContactsFromBack', async (_, { rejectWithValue }) => {
+  try {
+    const data = await getAllContacts(); 
+    return data;
+  
+} catch (error) { return rejectWithValue(error.message)
+  
+}  })
 
-export const removeContact = createAsyncThunk('contacts/removeContact', async (id) => { return await deleteContact(id) })
+export const removeContact = createAsyncThunk('contacts/removeContact', async (id, {rejectWithValue}) => {
+  try {
+    const data = await deleteContact(id); 
+    return data;
+  
+} catch (error) { return rejectWithValue(error.message)
+  
+}  })
 
-export const addNewContact = createAsyncThunk('contacts/addNewContact', async(newContact)=>{return await addContact(newContact)})
+export const addNewContact = createAsyncThunk('contacts/addNewContact', async(newContact, {rejectWithValue})=>{
+  try {
+    const data = await addContact(newContact); 
+    return data;
+  
+} catch (error) { return rejectWithValue(error.message)
+  
+}  })
 
 const handlePending = (state) => { state.isLoading = true }
 const handleRejected = (state, action) => {state.isLoading = false;
-        state.error = action.payload.message}
+        state.error = action.payload}
 
 const sliceContacts = createSlice({
   name: 'contacts',
@@ -33,16 +54,20 @@ const sliceContacts = createSlice({
       })
       .addCase(getContactsFromBack.rejected, handleRejected)
       .addCase(removeContact.pending, handlePending)
-      .addCase(removeContact.fulfilled, (state) => {
+      .addCase(removeContact.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
+        const index = state.contacts.findIndex(contact => contact.id === action.payload.id);
+        console.log(state.contacts);
+        console.log(index);
+      state.contacts.splice(index, 1);
           })
       .addCase(removeContact.rejected, handleRejected)
       .addCase(addNewContact.pending, handlePending)
-      .addCase(addNewContact.fulfilled,(state) => {
+      .addCase(addNewContact.fulfilled,(state, action) => {
         state.isLoading = false;
         state.error = null;
-         getContactsFromBack();
+         state.contacts.push(action.payload.data)
           })
       .addCase(addNewContact.rejected, handleRejected)
   

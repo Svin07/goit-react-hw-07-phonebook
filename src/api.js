@@ -20,7 +20,7 @@ export const deleteContact =  async (id) => {
 
 
 export const addContact = async (newContact) => {
-  console.log(newContact);
+  
     const data = await axios.post("/Contacts", {
   method: 'POST',
   headers: {'content-type':'application/json'},
